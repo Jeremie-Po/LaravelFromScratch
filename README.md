@@ -7,6 +7,10 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## About this repo
+
+The purpose of this repository is to learn/review the basics of Laravel. Thanks to Jeffrey for offering this online course: https://laracasts.com/series/30-days-to-learn-laravel-11/
+
 ## Start/stop docker containers
 https://laravel.com/docs/11.x/sail
 
