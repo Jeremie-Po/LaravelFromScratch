@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    @vite('resources/css/app.css')
+    {{--    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>--}}
 </head>
 <body>
     <!--
