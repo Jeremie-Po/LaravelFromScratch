@@ -8,7 +8,13 @@ class Job
 {
     public static function find($id)
     {
-        return Arr::first(static::all(), fn($job) => $job['id'] == $id);
+        $job = Arr::first(static::all(), fn($job) => $job['id'] == $id);
+
+        if (!$job) {
+            abort(404);
+        }
+
+        return $job;
     }
 
     public static function all(): array
