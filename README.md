@@ -18,6 +18,11 @@ https://laravel.com/docs/11.x/sail
 - with configured alias => sail up or sail up -d
 - sail stop
 
+## rebuild containers
+
+- sail build --no-cache
+- sail up -d
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
