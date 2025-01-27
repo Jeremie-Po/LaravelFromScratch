@@ -23,6 +23,11 @@ https://laravel.com/docs/11.x/sail
 - sail build --no-cache
 - sail up -d
 
+## migration
+
+- Create a new table : sail artisan make:migration
+- Run migration : sail artisan migrate
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

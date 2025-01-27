@@ -22,17 +22,17 @@ class Job
         return [
             [
                 'id' => 1,
-                'name' => 'Software Engineer',
+                'title' => 'Software Engineer',
                 'salary' => '$10k',
             ],
             [
                 'id' => 2,
-                'name' => 'Web Developer',
+                'title' => 'Web Developer',
                 'salary' => '$20k',
             ],
             [
                 'id' => 3,
-                'name' => 'Graphic Designer',
+                'title' => 'Graphic Designer',
                 'salary' => '$30k',
             ],
         ];
