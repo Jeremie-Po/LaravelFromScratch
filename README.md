@@ -28,6 +28,85 @@ https://laravel.com/docs/11.x/sail
 - Create a new table : sail artisan make:migration
 - Run migration : sail artisan migrate
 
+## tinker
+
+Tinker is a playground with eloquent
+
+- exemple of creating a job object with tinker
+
+```
+➜  example-app git:(eloquent) ✗ sail artisan tinker
+Psy Shell v0.12.7 (PHP 8.4.3 — cli) by Justin Hileman
+> App\Models\Job::create(['title' => 'Producer', 'salary' => '65 0000']);
+= App\Models\Job {#5225
+    title: "Producer",
+    salary: "65 0000",
+    updated_at: "2025-01-28 15:16:02",
+    created_at: "2025-01-28 15:16:02",
+    id: 4,
+  }
+
+> `
+
+```
+
+- listing all jobs
+
+```
+> App\Models\Job::all()
+
+```
+
+- find one by id
+
+```
+> App\Models\Job::find(2)
+or
+$job = App\Models\Job::find(2)
+= App\Models\Job {#5205
+    id: 2,
+    title: "Director",
+    salary: "80 000",
+    created_at: null,
+    updated_at: null,
+  }
+
+```
+
+- interact with a variable
+
+```
+> $job->title
+= "Director"
+
+> $job->salary
+= "80 000"
+
+
+```
+
+- delete a variable
+
+```
+> $job->delete()
+= true
+
+```
+
+## Create model
+
+To find help : php artisan help make:model
+
+- sail artisan make:model
+- sail artisan make:model -m => to create the migration file with the model one
+
+- to 'alias' the table =>
+
+```
+class Job extends Model
+{
+    protected $table = 'job_listing';
+```
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
