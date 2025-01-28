@@ -120,6 +120,36 @@ sail artisan make:migration update_users_table --table=users
             $table->string('lastName')->after('firstname');;
         });
 ```
+
+## Factory
+
+sail artisan tinker
+
+- create 1 user
+
+```
+> App\Models\User::factory()->create()
+= App\Models\User {#5244
+    firstName: "Karine",
+    lastName: "Konopelski",
+    email: "kreiger.zachery@example.com",
+    email_verified_at: "2025-01-28 20:18:06",
+    #password: "$2y$12$uHRRLZz/0ODqpEHyn13U4.huXiRwPxJ/3unWTyJZQHdbPXpYT8dt6",
+    #remember_token: "Qb0sPeIKyX",
+    updated_at: "2025-01-28 20:18:06",
+    created_at: "2025-01-28 20:18:06",
+    id: 2,
+  }
+
+> 
+```
+
+- create 100 users
+
+```
+> App\Models\User::factory(100)->create()
+
+```
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
