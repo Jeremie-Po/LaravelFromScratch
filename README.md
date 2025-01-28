@@ -107,6 +107,19 @@ class Job extends Model
 {
     protected $table = 'job_listing';
 ```
+
+## Modification of a table
+
+sail artisan make:migration update_users_table --table=users
+
+- exemple of rename and add a new table
+
+```
+ Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('name', 'firstName');
+            $table->string('lastName')->after('firstname');;
+        });
+```
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
