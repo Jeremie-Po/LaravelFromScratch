@@ -277,6 +277,28 @@ sail artisan vendor:publish
 ```
  Copying directory [vendor/laravel/framework/src/Illuminate/Pagination/resources/views] to [resources/views/vendor/pagination] 
 ```
+
+## Seeder
+
+- to seed the db and fresh it
+
+```
+sail artisan migrate:fresh --seed
+```
+
+- Create a new seeder file
+
+```
+sail artisan make:seeder
+```
+
+- to run this specific file
+
+```
+sail artisan db:seed --class=JobSeeder
+```
+
+## Laravel
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
