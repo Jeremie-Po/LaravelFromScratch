@@ -206,6 +206,43 @@ $job->tags()-get()->pluck('title')
 - https://github.com/barryvdh/laravel-debugbar
 - .env APP_DEBUG=true
 
+## n+1 problem
+
+This problem is when you get a collection without the relations. if you map on this collection and you need to use a
+relation it will send a new request each time.
+if you have an eager load you can prevent this and limit the number of request by charcging relations that you will use.
+
+- add an error message when there is n+1 problem in the AppServiceProvider.php file
+
+```
+public function boot(): void
+    {
+//        when there is a n+1 problem it will display an error page
+        Model::preventLazyLoading(true);
+    }
+```
+
+to prevent from this 2 ways :
+
+- by charging collection with relation you need
+
+```
+Route::get('/jobs', function () {
+    $jobs = Job::with('employer')->get();
+    return view('jobs', [
+        'jobs' => $jobs,
+    ]);
+});
+```
+
+- by loading relation when you are mapping the collection :
+
+```
+$postTitles = $comments->load('post')->map(function ($comment) {
+	return $comment->post->title;  
+});
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
