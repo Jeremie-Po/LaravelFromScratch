@@ -150,6 +150,56 @@ sail artisan tinker
 > App\Models\User::factory(100)->create()
 
 ```
+
+## pivot table
+
+Exemple with job_tag pivot table
+
+- in the tag model (if specific name of table):
+
+```
+public function jobs()
+    {
+        return $this->belongsToMany(Job::class, relatedPivotKey: 'job_listing_id');
+    }
+```
+
+- in the job model (if specific name of table):
+
+```
+ public function tags()
+    {
+        return $this->belongsToMany(Tag::class, foreignPivotKey: 'job_listing_id');
+    }
+```
+
+-tiinker manipulation :
+
+to get the first job item tags
+
+```
+ $job = App\Models\Job::first()
+$job->tags
+```
+
+to attach the id 2 tag to the job item
+
+```
+$job->tags()->attach(2)
+```
+
+To refetch collection
+
+```
+$job->tags()-get()
+```
+
+to get only the title name of the collection
+
+```
+$job->tags()-get()->pluck('title')
+
+```
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
