@@ -200,6 +200,12 @@ to get only the title name of the collection
 $job->tags()-get()->pluck('title')
 
 ```
+
+## add debug bar to the project
+
+- https://github.com/barryvdh/laravel-debugbar
+- .env APP_DEBUG=true
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
