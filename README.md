@@ -23,6 +23,226 @@ https://laravel.com/docs/11.x/sail
 - sail build --no-cache
 - sail up -d
 
+## migration
+
+- Create a new table : sail artisan make:migration
+- Run migration : sail artisan migrate
+
+## tinker
+
+Tinker is a playground with eloquent
+
+- exemple of creating a job object with tinker
+
+```
+➜  example-app git:(eloquent) ✗ sail artisan tinker
+Psy Shell v0.12.7 (PHP 8.4.3 — cli) by Justin Hileman
+> App\Models\Job::create(['title' => 'Producer', 'salary' => '65 0000']);
+= App\Models\Job {#5225
+    title: "Producer",
+    salary: "65 0000",
+    updated_at: "2025-01-28 15:16:02",
+    created_at: "2025-01-28 15:16:02",
+    id: 4,
+  }
+
+> `
+
+```
+
+- listing all jobs
+
+```
+> App\Models\Job::all()
+
+```
+
+- find one by id
+
+```
+> App\Models\Job::find(2)
+or
+$job = App\Models\Job::find(2)
+= App\Models\Job {#5205
+    id: 2,
+    title: "Director",
+    salary: "80 000",
+    created_at: null,
+    updated_at: null,
+  }
+
+```
+
+- interact with a variable
+
+```
+> $job->title
+= "Director"
+
+> $job->salary
+= "80 000"
+
+
+```
+
+- delete a variable
+
+```
+> $job->delete()
+= true
+
+```
+
+## Create model
+
+To find help : php artisan help make:model
+
+- sail artisan make:model
+- sail artisan make:model -m => to create the migration file with the model one
+
+- to 'alias' the table =>
+
+```
+class Job extends Model
+{
+    protected $table = 'job_listing';
+```
+
+## Modification of a table
+
+sail artisan make:migration update_users_table --table=users
+
+- exemple of rename and add a new table
+
+```
+ Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('name', 'firstName');
+            $table->string('lastName')->after('firstname');;
+        });
+```
+
+## Factory
+
+sail artisan tinker
+
+- create 1 user
+
+```
+> App\Models\User::factory()->create()
+= App\Models\User {#5244
+    firstName: "Karine",
+    lastName: "Konopelski",
+    email: "kreiger.zachery@example.com",
+    email_verified_at: "2025-01-28 20:18:06",
+    #password: "$2y$12$uHRRLZz/0ODqpEHyn13U4.huXiRwPxJ/3unWTyJZQHdbPXpYT8dt6",
+    #remember_token: "Qb0sPeIKyX",
+    updated_at: "2025-01-28 20:18:06",
+    created_at: "2025-01-28 20:18:06",
+    id: 2,
+  }
+
+> 
+```
+
+- create 100 users
+
+```
+> App\Models\User::factory(100)->create()
+
+```
+
+## pivot table
+
+Exemple with job_tag pivot table
+
+- in the tag model (if specific name of table):
+
+```
+public function jobs()
+    {
+        return $this->belongsToMany(Job::class, relatedPivotKey: 'job_listing_id');
+    }
+```
+
+- in the job model (if specific name of table):
+
+```
+ public function tags()
+    {
+        return $this->belongsToMany(Tag::class, foreignPivotKey: 'job_listing_id');
+    }
+```
+
+-tiinker manipulation :
+
+to get the first job item tags
+
+```
+ $job = App\Models\Job::first()
+$job->tags
+```
+
+to attach the id 2 tag to the job item
+
+```
+$job->tags()->attach(2)
+```
+
+To refetch collection
+
+```
+$job->tags()-get()
+```
+
+to get only the title name of the collection
+
+```
+$job->tags()-get()->pluck('title')
+
+```
+
+## add debug bar to the project
+
+- https://github.com/barryvdh/laravel-debugbar
+- .env APP_DEBUG=true
+
+## n+1 problem
+
+This problem is when you get a collection without the relations. if you map on this collection and you need to use a
+relation it will send a new request each time.
+if you have an eager load you can prevent this and limit the number of request by charcging relations that you will use.
+
+- add an error message when there is n+1 problem in the AppServiceProvider.php file
+
+```
+public function boot(): void
+    {
+//        when there is a n+1 problem it will display an error page
+        Model::preventLazyLoading(true);
+    }
+```
+
+to prevent from this 2 ways :
+
+- by charging collection with relation you need
+
+```
+Route::get('/jobs', function () {
+    $jobs = Job::with('employer')->get();
+    return view('jobs', [
+        'jobs' => $jobs,
+    ]);
+});
+```
+
+- by loading relation when you are mapping the collection :
+
+```
+$postTitles = $comments->load('post')->map(function ($comment) {
+	return $comment->post->title;  
+});
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
