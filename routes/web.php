@@ -35,11 +35,17 @@ Route::get('/jobs/{id}', function ($id) {
 
 Route::post('/jobs', function () {
 //validation
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required', 'integer'],
+    ]);
+
     Job::create([
         'title' => request('title'),
         'salary' => request('salary'),
         'employer_id' => 1,
     ]);
+
     return redirect('/jobs');
 });
 
