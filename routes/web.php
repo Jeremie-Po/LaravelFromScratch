@@ -1,40 +1,23 @@
 <?php
 
-use App\Models\Job;
+use App\Http\Controllers\jobController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::view('/', 'home');
+Route::view('/about', 'about');
+Route::view('/contact', 'contact');
 
-Route::get('/jobs', function () {
-//    $jobs = Job::with('employer')->get();
-    $jobs = Job::with('employer')->simplePaginate(10);
+//Route::controller(jobController::class)->group(function () {
+//    Route::get('/jobs', 'index');
+//    Route::get('/jobs/{job}', 'show');
+//    Route::get('/jobs/create', 'create');
+//    Route::post('/jobs', 'store');
+//    Route::get('/jobs/{job}/edit', 'edit');
+//    Route::patch('/jobs/{job}', 'update');
+//    Route::delete('/jobs/{job}', 'destroy');
+//});
+
+Route::resource('jobs', jobController::class);
 
 
-    return view('jobs', [
-        'jobs' => $jobs,
-    ]);
-});
 
-Route::get('/jobs/{id}', function ($id) {
-
-//    vieille solution avec un tableau en dur:
-//    $job = Arr::first($jobs, function ($job) use ($id) {
-//        return $job['id'] === $id;
-//    });
-//    $job = Arr::first($jobs, fn($job) => $job['id'] == $id);
-    $job = Job::find($id);
-
-    return view('job', [
-        'job' => $job,
-    ]);
-});
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
-});
