@@ -49,6 +49,14 @@ Route::post('/jobs', function () {
     return redirect('/jobs');
 });
 
+Route::get('/jobs/{id}/edit', function ($id) {
+    $job = Job::find($id);
+
+    return view('jobs.edit', [
+        'job' => $job,
+    ]);
+});
+
 Route::get('/about', function () {
     return view('about');
 });
