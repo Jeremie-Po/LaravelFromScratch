@@ -7,6 +7,7 @@ Route::get('/', function () {
     return view('home');
 });
 
+//create
 Route::get('/jobs/create', function () {
     return view('jobs.create', []);
 });
@@ -20,12 +21,8 @@ Route::get('/jobs', function () {
     ]);
 });
 
+//show
 Route::get('/jobs/{id}', function ($id) {
-//    vieille solution avec un tableau en dur:
-//    $job = Arr::first($jobs, function ($job) use ($id) {
-//        return $job['id'] === $id;
-//    });
-//    $job = Arr::first($jobs, fn($job) => $job['id'] == $id);
     $job = Job::find($id);
 
     return view('jobs.show', [
@@ -33,8 +30,8 @@ Route::get('/jobs/{id}', function ($id) {
     ]);
 });
 
+//store
 Route::post('/jobs', function () {
-//validation
     request()->validate([
         'title' => ['required', 'min:3'],
         'salary' => ['required', 'integer'],
@@ -49,12 +46,37 @@ Route::post('/jobs', function () {
     return redirect('/jobs');
 });
 
+//edit
 Route::get('/jobs/{id}/edit', function ($id) {
     $job = Job::find($id);
 
     return view('jobs.edit', [
         'job' => $job,
     ]);
+});
+
+//Patch
+Route::patch('/jobs/{id}', function ($id) {
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required', 'integer'],
+    ]);
+
+    $job = Job::findOrFail($id);
+
+    $job->update([
+        'title' => request('title'),
+        'salary' => request('salary'),
+    ]);
+
+    return redirect('/jobs/'.$job->id);
+});
+
+//Destroy
+Route::delete('/jobs/{id}', function ($id) {
+    Job::findOrFail($id)->delete();
+
+    return redirect('/jobs');
 });
 
 Route::get('/about', function () {
