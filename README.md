@@ -298,6 +298,42 @@ sail artisan make:seeder
 sail artisan db:seed --class=JobSeeder
 ```
 
+## Route Model Binding
+
+Laravel can find automatically the object you looking for.
+
+- without binding :
+
+```
+Route::get('/jobs/{id}', function ($id) {
+    $job = Job::find($id);
+
+    return view('jobs.show', [
+        'job' => $job,
+    ]);
+});
+```
+
+- with binding :
+
+```
+Route::get('/jobs/{job}', function (Job $job) {
+    return view('jobs.show', [
+        'job' => $job,
+    ]);
+});
+```
+
+By default it refer to the id but we can refer to another column :
+
+```
+Route::get('/jobs/{job:slug}', function (Job $job) {
+    return view('jobs.show', [
+        'job' => $job,
+    ]);
+});
+```
+
 ## Laravel
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
