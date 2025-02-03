@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\authController;
 use App\Http\Controllers\jobController;
+use App\Http\Controllers\sessionController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home');
@@ -23,6 +24,11 @@ Route::view('/contact', 'contact');
 Route::resource('jobs', jobController::class);
 
 Route::get('/register', [authController::class, 'create']);
+Route::post('/register', [authController::class, 'store']);
+
+Route::get('/login', [sessionController::class, 'create']);
+Route::post('/login', [sessionController::class, 'store']);
+
 
 
 
