@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\authController;
 use App\Http\Controllers\jobController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +17,12 @@ Route::view('/contact', 'contact');
 //    Route::patch('/jobs/{job}', 'update');
 //    Route::delete('/jobs/{job}', 'destroy');
 //});
+//ou plus classique :
+//Route::get('/jobs/create', [jobController::class, 'create']);
 
 Route::resource('jobs', jobController::class);
+
+Route::get('/register', [authController::class, 'create']);
 
 
 
