@@ -456,7 +456,7 @@ Gate::define('edit-job', function (User $user=null, Job $job) {
 
 - 3 Can/Cannot
 
-authorize a user to do something :
+test if a user can do something :
 
 ```
 // Gate::authorize('edit-job', $job);
@@ -474,14 +474,14 @@ if (Auth::user()->cannot('edit-job',$job))
 
 ```
 
-in the blade it can be use to display or not a button :
+in the blade it can be use to display or not a button  :
 
 ```
 @can('edit-job',$job)
         <x-button href="/jobs/{{ $job->id }}/edit" class="mt-3">
             Edit job
         </x-button>
-    @endcan
+@endcan
 ```
 
 ## Laravel
