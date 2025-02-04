@@ -484,6 +484,15 @@ in the blade it can be use to display or not a button  :
 @endcan
 ```
 
+- 4 Policy
+
+```
+sail art make:policy;
+```
+
+it can replace the gate method to rules the access.   
+Policy will be used in big project and gate in little
+
 ## Laravel
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 

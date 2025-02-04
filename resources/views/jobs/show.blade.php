@@ -7,7 +7,7 @@
         <li><strong>{{ $job->title}} : </strong>Salary {{ $job->salary }}</li>
     </ul>
 
-    @can('edit-job',$job)
+    @can('edit',$job)
         <x-button href="/jobs/{{ $job->id }}/edit" class="mt-3">
             Edit job
         </x-button>
