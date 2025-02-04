@@ -11,8 +11,8 @@ Route::view('/contact', 'contact');
 
 Route::controller(jobController::class)->group(function () {
     Route::get('/jobs', 'index');
-    Route::get('/jobs/{job}', 'show');
     Route::get('/jobs/create', 'create');
+    Route::get('/jobs/{job}', 'show');
     Route::post('/jobs', 'store')
         ->middleware('auth');
 
