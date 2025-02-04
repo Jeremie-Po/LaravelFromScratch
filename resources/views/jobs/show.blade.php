@@ -7,8 +7,10 @@
         <li><strong>{{ $job->title}} : </strong>Salary {{ $job->salary }}</li>
     </ul>
 
-    <x-button href="/jobs/{{ $job->id }}/edit" class="mt-3">
-        Edit job
-    </x-button>
+    @can('edit-job',$job)
+        <x-button href="/jobs/{{ $job->id }}/edit" class="mt-3">
+            Edit job
+        </x-button>
+    @endcan
 </x-layout>
 

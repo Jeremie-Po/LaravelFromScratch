@@ -388,6 +388,8 @@ Route::resource('jobs', jobController::class,[
   allow to access to the edit fonction if you are connected  
   AND if the auth userID is the same of the edited job
 
+for oneshoot use
+
 ```
 if (Auth::guest()) {
             return redirect('/login');
@@ -400,6 +402,8 @@ if ($job->employer->user->isNot(Auth::user())) {
 
 - 2 Gates  
   same as in line authorization but we use the gate :
+
+for overall use
 
 ```
 // on cree une gate qui renvoit un boolean
@@ -448,6 +452,36 @@ Gate::define('edit-job', function (User $user=null, Job $job) {
             return $job->employer->user->is($user);
         });
 
+```
+
+- 3 Can/Cannot
+
+authorize a user to do something :
+
+```
+// Gate::authorize('edit-job', $job);
+
+if (Auth::user()->can('edit-job',$job)) 
+{
+//
+};
+
+or
+if (Auth::user()->cannot('edit-job',$job)) 
+{
+//
+};
+
+```
+
+in the blade it can be use to display or not a button :
+
+```
+@can('edit-job',$job)
+        <x-button href="/jobs/{{ $job->id }}/edit" class="mt-3">
+            Edit job
+        </x-button>
+    @endcan
 ```
 
 ## Laravel
