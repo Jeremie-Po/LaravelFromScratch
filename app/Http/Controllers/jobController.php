@@ -38,7 +38,9 @@ class jobController extends Controller
 
         return redirect('/jobs');
     }
-    public function edit(Job $job){
+
+    public function edit(Job $job)
+    {
         return view('jobs.edit', [
             'job' => $job,
         ]);

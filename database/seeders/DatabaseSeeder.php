@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employer;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -16,10 +18,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'firstName' => 'John',
             'lastName' => 'Doe',
             'email' => 'john@example.com',
+            'password' => 'password',
+        ]);
+
+        $employer = Employer::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        job::factory(10)->create([
+            'employer_id' => $employer->id,
         ]);
         
         $this->call(JobSeeder::class);

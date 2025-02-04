@@ -22,5 +22,10 @@ class AppServiceProvider extends ServiceProvider
     {
 //        when there is a n+1 problem it will display an error page
         Model::preventLazyLoading(true);
+
+//        it ll be replaced by the policy (jobpolicy)
+//        Gate::define('edit-job', function (User $user, Job $job) {
+//            return $job->employer->user->is($user);
+//        });
     }
 }

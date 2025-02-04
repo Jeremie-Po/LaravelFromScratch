@@ -381,6 +381,118 @@ Route::resource('jobs', jobController::class,[
 
 ```
 
+## Authorization
+
+- 1 inline authorization  
+  exemple in jobController::edit  
+  allow to access to the edit fonction if you are connected  
+  AND if the auth userID is the same of the edited job
+
+for oneshoot use
+
+```
+if (Auth::guest()) {
+            return redirect('/login');
+        }
+        
+if ($job->employer->user->isNot(Auth::user())) {
+            abort(403);
+        }
+```
+
+- 2 Gates  
+  same as in line authorization but we use the gate :
+
+for overall use
+
+```
+// on cree une gate qui renvoit un boolean
+Gate::define('edit-job', function (User $user, Job $job) {
+            return $job->employer->user->is($user);
+        });
+        
+// On utilise ensuite la gate la ou on en a besoin. La gate laisse passer ou renvoi une 403
+        Gate::authorize('edit-job', $job);
+
+// pour lui demander d'effectuer une action si c'est bon ou si c'est refuser il faut utiliser plutot :
+        if (Gate::allows('edit-job', $job)) {
+        //
+        };
+// ou
+
+if (Gate::denies('edit-job', $job)) {
+        //
+        };
+```
+
+We ll use the appServiceProvider.php file to declare the gates :
+
+```
+public function boot(): void
+    {
+//        when there is a n+1 problem it will display an error page
+        Model::preventLazyLoading(true);
+
+        Gate::define('edit-job', function (User $user, Job $job) {
+            return $job->employer->user->is($user);
+        });
+    }
+```
+
+Because the User in the Gate define will always refer to an authenticate user,   
+if you are a guest user, the gate will always return false. but in certain cas it can be   
+changed if we use the gate::define loike this :
+
+```
+Gate::define('edit-job', function (?User $user, Job $job) {
+            return $job->employer->user->is($user);
+        });
+or
+Gate::define('edit-job', function (User $user=null, Job $job) {
+            return $job->employer->user->is($user);
+        });
+
+```
+
+- 3 Can/Cannot
+
+test if a user can do something :
+
+```
+// Gate::authorize('edit-job', $job);
+
+if (Auth::user()->can('edit-job',$job)) 
+{
+//
+};
+
+or
+if (Auth::user()->cannot('edit-job',$job)) 
+{
+//
+};
+
+```
+
+in the blade it can be use to display or not a button  :
+
+```
+@can('edit-job',$job)
+        <x-button href="/jobs/{{ $job->id }}/edit" class="mt-3">
+            Edit job
+        </x-button>
+@endcan
+```
+
+- 4 Policy
+
+```
+sail art make:policy;
+```
+
+it can replace the gate method to rules the access.   
+Policy will be used in big project and gate in little
+
 ## Laravel
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
