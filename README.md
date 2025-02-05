@@ -522,8 +522,47 @@ http://localhost:8025/
 - it is possible to use mailtrap to simulate reel email via smtp :
   https://mailtrap.io/?gad_source=1&gclid=CjwKCAiAtYy9BhBcEiwANWQQL2T-k8u9v3dNvZqw0LPDLUGxbfmZn6hSTuFrk_04KTDO-O-PlrGZlxoCbWAQAvD_BwE  
   just need to configure the smtp in the .env file and if you send an email it will be "trap" to mail trap
--
 
+- to optimize time to send email we can use queue
+
+```
+// replace
+        mail::to($job->employer->user)->send(new JobPosted($job));
+// with 
+        mail::to($job->employer->user)->queue(new JobPosted($job));
+
+```
+
+we need to run the queue work to do the job
+
+```
+sail art queue:work
+```
+
+il est possible creer un job et de le mettre dans la queue :
+
+```
+Route::get('test', function () {
+    dispatch(function () {
+        logger('hello from the queue');
+    });
+    
+    return 'done';
+});
+```
+
+it is possible to delay the job in the queue :
+
+```
+// delay = 5secondes
+Route::get('test', function () {
+    dispatch(function () {
+        logger('hello from the queue');
+    })->delay(5);
+    
+    return 'done';
+});
+```
 ## Laravel
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 

@@ -3,7 +3,17 @@
 use App\Http\Controllers\authController;
 use App\Http\Controllers\jobController;
 use App\Http\Controllers\sessionController;
+use App\Mail\JobPosted;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+
+Route::get('test', function () {
+    dispatch(function () {
+        logger('hello from the queue');
+    });
+    
+    return 'done';
+});
 
 Route::view('/', 'home');
 Route::view('/about', 'about');
