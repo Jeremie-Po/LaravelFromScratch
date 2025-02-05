@@ -563,6 +563,22 @@ Route::get('test', function () {
     return 'done';
 });
 ```
+
+- the job can be store in a job class, for example TranslateJob.php.
+
+```
+sail art make:job
+```
+
+it can be use like this :
+
+```
+Route::get('test', function () {
+    TranslateJob::dispatch();
+    return 'done';
+});
+```
+
 ## Laravel
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 

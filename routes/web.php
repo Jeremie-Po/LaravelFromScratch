@@ -3,15 +3,13 @@
 use App\Http\Controllers\authController;
 use App\Http\Controllers\jobController;
 use App\Http\Controllers\sessionController;
+use App\Jobs\TranslateJob;
 use App\Mail\JobPosted;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('test', function () {
-    dispatch(function () {
-        logger('hello from the queue');
-    });
-    
+    TranslateJob::dispatch();
     return 'done';
 });
 
