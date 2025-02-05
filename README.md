@@ -579,6 +579,10 @@ Route::get('test', function () {
 });
 ```
 
+## tailwind on laravel
+
+https://laracasts.com/series/30-days-to-learn-laravel-11/episodes/26
+
 ## Laravel
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
