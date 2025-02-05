@@ -3,7 +3,15 @@
 use App\Http\Controllers\authController;
 use App\Http\Controllers\jobController;
 use App\Http\Controllers\sessionController;
+use App\Jobs\TranslateJob;
+use App\Mail\JobPosted;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+
+Route::get('test', function () {
+    TranslateJob::dispatch();
+    return 'done';
+});
 
 Route::view('/', 'home');
 Route::view('/about', 'about');
@@ -11,8 +19,8 @@ Route::view('/contact', 'contact');
 
 Route::controller(jobController::class)->group(function () {
     Route::get('/jobs', 'index');
-    Route::get('/jobs/{job}', 'show');
     Route::get('/jobs/create', 'create');
+    Route::get('/jobs/{job}', 'show');
     Route::post('/jobs', 'store')
         ->middleware('auth');
 

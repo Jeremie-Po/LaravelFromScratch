@@ -493,6 +493,96 @@ sail art make:policy;
 it can replace the gate method to rules the access.   
 Policy will be used in big project and gate in little
 
+## send Email
+
+```
+sail artisan make:email
+```
+
+name the file
+
+- to send an email :
+
+```
+Route::get('test', function () {
+    mail::to('johndoe@example.com')->send(new JobPosted());
+
+    return 'done';
+});
+```
+
+- to view the mail (for sail)
+
+```
+http://localhost:8025/
+```
+
+- mail.php is the file where we can config the mail
+
+- it is possible to use mailtrap to simulate reel email via smtp :
+  https://mailtrap.io/?gad_source=1&gclid=CjwKCAiAtYy9BhBcEiwANWQQL2T-k8u9v3dNvZqw0LPDLUGxbfmZn6hSTuFrk_04KTDO-O-PlrGZlxoCbWAQAvD_BwE  
+  just need to configure the smtp in the .env file and if you send an email it will be "trap" to mail trap
+
+- to optimize time to send email we can use queue
+
+```
+// replace
+        mail::to($job->employer->user)->send(new JobPosted($job));
+// with 
+        mail::to($job->employer->user)->queue(new JobPosted($job));
+
+```
+
+we need to run the queue work to do the job
+
+```
+sail art queue:work
+```
+
+il est possible creer un job et de le mettre dans la queue :
+
+```
+Route::get('test', function () {
+    dispatch(function () {
+        logger('hello from the queue');
+    });
+    
+    return 'done';
+});
+```
+
+it is possible to delay the job in the queue :
+
+```
+// delay = 5secondes
+Route::get('test', function () {
+    dispatch(function () {
+        logger('hello from the queue');
+    })->delay(5);
+    
+    return 'done';
+});
+```
+
+- the job can be store in a job class, for example TranslateJob.php.
+
+```
+sail art make:job
+```
+
+it can be use like this :
+
+```
+Route::get('test', function () {
+    TranslateJob::dispatch();
+    return 'done';
+});
+```
+
+## tailwind on laravel
+
+https://laracasts.com/series/30-days-to-learn-laravel-11/episodes/26
+
 ## Laravel
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
