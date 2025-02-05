@@ -3,11 +3,20 @@
 use App\Http\Controllers\authController;
 use App\Http\Controllers\jobController;
 use App\Http\Controllers\sessionController;
+use App\Mail\JobPosted;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use function App\Mail\JobPosted;
 
 Route::view('/', 'home');
 Route::view('/about', 'about');
 Route::view('/contact', 'contact');
+
+Route::get('test', function () {
+    mail::to('johndoe@example.com')->send(new JobPosted());
+
+    return 'done';
+});
 
 Route::controller(jobController::class)->group(function () {
     Route::get('/jobs', 'index');

@@ -493,6 +493,32 @@ sail art make:policy;
 it can replace the gate method to rules the access.   
 Policy will be used in big project and gate in little
 
+## send Email
+
+```
+sail artisan make:email
+```
+
+name the file
+
+- to send an email :
+
+```
+Route::get('test', function () {
+    mail::to('johndoe@example.com')->send(new JobPosted());
+
+    return 'done';
+});
+```
+
+- to view the mail (for sail)
+
+```
+http://localhost:8025/
+```
+
+- mail.php is the file where we can config the mail
+
 ## Laravel
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
